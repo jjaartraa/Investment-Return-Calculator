@@ -14,6 +14,7 @@ namespace Investment_Return_Calculator
         public static int timePeriod = 0;
         public static float totalInterest = 0;
         public static float totalInvestment = 0;
+        public static string currency = "";
 
         static void Main(string[] args)
         {
@@ -50,13 +51,32 @@ namespace Investment_Return_Calculator
             {
                 Console.Clear();
                 Refresh();
-                Console.Write("Welcome to Investment Return Calculator" + Environment.NewLine + "Please input starting account bilance:");
+                Console.Write("Welcome to Investment Return Calculator" + Environment.NewLine + "Please input currency code (CZK, EUR, USD, RUB, ...):");
+                failed = false;
+                try
+                {
+                    currency = Console.ReadLine();
+
+                    if (currency.Length != 3)
+                    {
+                        failed = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    failed = true;
+                }
+            } while (failed);
+            do
+            {
+                Console.Clear();
+                Refresh();
+                Console.Write("Please input starting account bilance:");
                 failed = false;
                 try
                 {
                     bilance = double.Parse(Console.ReadLine());
                     totalInvestment = (float)bilance;
-                    Console.Clear();
                 }
                 catch (Exception)
                 {
@@ -73,7 +93,6 @@ namespace Investment_Return_Calculator
                 try
                 {
                     interest = float.Parse(Console.ReadLine());
-                    Console.Clear();
                 }
                 catch (Exception)
                 {
@@ -90,7 +109,6 @@ namespace Investment_Return_Calculator
                 try
                 {
                     monthlyInvesment = float.Parse(Console.ReadLine());
-                    Console.Clear();
                 }
                 catch (Exception)
                 {
@@ -107,7 +125,6 @@ namespace Investment_Return_Calculator
                 try
                 {
                     timePeriod = int.Parse(Console.ReadLine());
-                    Console.Clear();
                 }
                 catch (Exception)
                 {
@@ -131,11 +148,12 @@ namespace Investment_Return_Calculator
         }
         public static void Refresh() 
         {
-            string info = Environment.NewLine + '\t' + " | " + "Bilance: " + bilance.ToString("###,###,###,###,###,##0.00") + " Kč" + Environment.NewLine
+            string info = Environment.NewLine 
+                + '\t' + " | " + "Bilance: " + bilance.ToString("###,###,###,###,###,##0.00 ") + currency + Environment.NewLine
                 + '\t' + " | " + "Interest: " + interest.ToString("#,##0.0") + "% " + Environment.NewLine
-                + '\t' + " | " + "Monthly Investments: " + monthlyInvesment.ToString("###,###,###,###,###,##0") + " Kč" + Environment.NewLine
-                + '\t' + " | " + "Total Interest: " + totalInterest.ToString("###,###,###,###,###,##0") + " Kč" + Environment.NewLine
-                + '\t' + " | " + "Total Investment: " + totalInvestment.ToString("###,###,###,###,###,##0") + " Kč" + Environment.NewLine
+                + '\t' + " | " + "Monthly Investments: " + monthlyInvesment.ToString("###,###,###,###,###,##0 ") + currency + Environment.NewLine
+                + '\t' + " | " + "Total Interest: " + totalInterest.ToString("###,###,###,###,###,##0 ") + currency + Environment.NewLine
+                + '\t' + " | " + "Total Investment: " + totalInvestment.ToString("###,###,###,###,###,##0 ") + currency + Environment.NewLine
                 + '\t' + " | " + "Time span: " + timePeriod + " months." + Environment.NewLine;
             Console.SetCursorPosition(0,0);
             Console.WriteLine(info);
